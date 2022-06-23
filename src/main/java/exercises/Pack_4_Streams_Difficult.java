@@ -1,15 +1,11 @@
 package exercises;
 
-import org.apache.commons.lang3.tuple.Pair;
-import utils.Address;
 import utils.Employee;
 import utils.Employees;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
