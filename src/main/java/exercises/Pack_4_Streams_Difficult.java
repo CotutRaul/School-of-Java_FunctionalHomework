@@ -1,6 +1,7 @@
 package exercises;
 
 import org.apache.commons.lang3.tuple.Pair;
+import utils.Address;
 import utils.Employee;
 import utils.Employees;
 import org.junit.Ignore;
@@ -80,6 +81,7 @@ public class Pack_4_Streams_Difficult {
                 .collect(Collectors.groupingBy(employee -> employee.getCompany().getName(),LinkedHashMap::new, Collectors.summingInt(e -> e.getSalary().intValue())))
                 .entrySet()
                 .stream()
+                .sorted((o1, o2) -> o2.getValue()-o1.getValue())
                 .map(entry -> entry.getKey() + " - " + decimalFormat.format(entry.getValue()))
                 .collect(Collectors.toList());
 
@@ -123,7 +125,6 @@ public class Pack_4_Streams_Difficult {
         )));
     }
 
-    @Ignore
     @Test
     public void exercise_6_mapToLong() {
         // the rows and columns of the chess board are assigned arbitrary numbers (instead of letters and digits)
@@ -141,7 +142,6 @@ public class Pack_4_Streams_Difficult {
         assertThat(result, sameBeanAs(538960304L));
     }
 
-    @Ignore
     @Test
     public void exercise_7_randomLongs_concat_toArray() {
         // concatenate two random streams of numbers (seed is fixed for testing purposes),
@@ -155,12 +155,21 @@ public class Pack_4_Streams_Difficult {
 
 
 
-        result = IntStream.concat(longs.mapToInt(value -> (int) value),ints)
+//        result = IntStream.concat(longs.mapToInt(value -> (int) value),ints)
+//                .map(e -> Math.abs(e))
+//                .sorted()
+//                .skip(5)
+//                .limit(10)
+//                .map(e -> e%1000)
+//                .toArray();
+
+        result = LongStream.concat(longs,ints.mapToLong(value -> (long) value))
                 .map(e -> Math.abs(e))
                 .sorted()
                 .skip(5)
                 .limit(10)
                 .map(e -> e%1000)
+                .mapToInt(value -> (int)value)
                 .toArray();
 
         assertThat(result, sameBeanAs(new long[] {106, 266, 402, 858, 313, 688, 303, 137, 766, 896}));
