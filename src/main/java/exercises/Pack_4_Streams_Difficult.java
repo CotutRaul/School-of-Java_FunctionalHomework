@@ -56,14 +56,14 @@ public class Pack_4_Streams_Difficult {
         assertThat(result, sameBeanAs(110L));
     }
 
-    @Ignore
     @Test
     public void exercise_3_flatMap() {
         // find the total number of all different home and correspondence addresses
 
         long result = 0;
 
-
+        result = EMPLOYEES.stream().flatMap(employee -> Stream.of(employee.getHomeAddress(), employee.getCorrespondenceAddress().get()))
+                .collect(Collectors.groupingBy(address -> address.getPostCode())).size();
 
         assertThat(result, sameBeanAs(1820L));
     }
